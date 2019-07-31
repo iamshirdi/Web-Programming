@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Profile page</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      function getGravatarData() {
+        const email = $("#id").val();
+
+        if (!email) return;
+
+        $.ajax({
+          type: "GET",
+          url: `json?userEmail=${email}`,
+          success: displayImage,
+          error: () => alert(`Couldn't find the email.`)
+        });
+      }
+
+      function displayImage(gravatarData) {
+        if (!gravatarData) alert(`Couldn't find the email.`);
+
+        /*
+        Get the needed attributes in the gravatar json response
+         - thumbnailUrl,
+         - preferredUsername
+         - displayName,
+        */
+
+        $("#id").attr(
+          `
+            new value of the attribute  
+          `
+        );
+      }
+    </script>
+  </head>
+
+  <body>
+    <h2>Gravatar API</h2>
+    <div id="something">
+	<img src='{{var1}}'>
+	<p> displayName: {{var2}} </p>
+	<p> prefferedUsername: {{var3}} </p>
+
+    </div>
+  </body>
+</html>
