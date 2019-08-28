@@ -71,6 +71,7 @@ class SessionHandler(BaseHTTPRequestHandler):
                 print(content)
             except:
                 self.send_response(404)
+                return
 
         self.send_response(response)
         self.send_header('Content-type', 'application/json')
