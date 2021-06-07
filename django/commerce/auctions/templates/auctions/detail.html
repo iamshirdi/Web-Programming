@@ -1,0 +1,76 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Details  of list</h2>
+
+    <img src ={{l.url}}  width="300" height="300">
+        <h3>{{l.title}}</h3>
+    <b>Price: ${{l.price.bid_price}}</b>
+    <p>Desc: {{l.description}}</p>
+    <p>Created {{l.created_date}}</p>
+    <form action="{% url 'watch' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden", name="aid", value ={{l.id}}>
+        <input type="submit" value="Watch" />
+    </form>
+
+    {% if  l.status.name == "open" %}
+
+    <p>bid price must be greater than initial price</p>
+    <form action="{% url 'bid' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden", name="arid", value ={{l.id}}>
+        <input type="text", name="bd", value ={{l.price.bid_price}}>
+        <input type="submit" value="Bid" />
+    </form>
+
+    <b>
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    </b>
+
+        <b>
+            <p>Current_status:{{l.status.name}} </p>
+            <p>Leading User:{{l.price.bid_user}} </p>
+        </b>
+
+    {% if  l.username.username == current %}    
+        <form action="{% url 'close' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden", name="arid", value ={{l.id}} >
+            <input type="submit" value="End Bid" />
+        </form>
+
+    {% endif %}
+    {% else %}
+    <b>Bidding is closed and the user won is:{{l.price.bid_user}} </b>
+    {% endif %}
+  
+    <hr>
+
+    <h2> Add Comment</h2>
+    <form action="{% url 'com' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden", name="user_no", value ={{current}}>
+        <input type="hidden", name="article_no", value ={{l.id}} >
+        <input type="text", name="descrip", value ="">
+        <input type="submit" value="Submit Comment" />
+    </form>
+
+    <hr>
+
+    <h2>Comments Listings</h2>
+    <ul>
+        {% for c in comments %}
+        <li>
+            <b>Comment: {{c.comment}}</b>
+            <p>Date: {{c.comment_date}}</p>
+            <p>Created by {{c.comment_user}}</p>
+            <hr>
+        </li>
+        {% endfor %}
+
+    </ul>
+    
+{% endblock %}

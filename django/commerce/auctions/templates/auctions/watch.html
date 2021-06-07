@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watch Listings</h2>
+    <ul>
+        {% for w in wl %}
+            {% for l in w %}
+            <li>
+                <img src ={{l.url}}  width="200" height="200">
+                <a href = "{% url 'details' l.id %}">
+                    <h3>{{l.title}}</h3>
+                </a>
+                <b>Price: ${{l.price}}</b>
+                <p>Desc: {{l.description}}</p>
+                <p>Created {{l.created_date}}</p>
+
+                <form action="{% url 'delid' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden", name="did", value ={{l.id}}>
+                    <input type="submit" value="Delete" />
+                </form>
+                <hr>
+            </li>
+            {% endfor %}
+        {% endfor %}
+
+
+    </ul>
+    
+{% endblock %}

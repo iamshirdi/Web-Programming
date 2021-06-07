@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Categorical Listings</h2>
+    <form action="{% url 'cat' %}" method="post">
+        {% csrf_token %}
+        <select name="test">
+
+        {% for ix in initial %}
+        <option value="{{ ix.cat }}">{{ ix.cat }}</option>
+        {% endfor %}
+        </select>
+
+        <input type="submit" value="Submit" />
+    </form>
+
+    <ul>
+        {% for l in cats %}
+        <li>
+            <img src ={{l.url}}  width="200" height="200">
+            <a href = "{% url 'details' l.id %}">
+                <h3>{{l.title}}</h3>
+            </a>
+            <b>Price: ${{l.price.bid_price}}</b>
+            <p>Desc: {{l.description}}</p>
+            <p>Created {{l.created_date}}</p>
+            <hr>
+        </li>
+        {% endfor %}
+
+    </ul>
+    
+{% endblock %}
