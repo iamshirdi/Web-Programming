@@ -1,0 +1,21 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+
+        {% if not content %}
+            <h3>Content not found</h3>
+        {% else %}
+        <h3>
+            <a href = {{url}} >Edit</a>
+        </h3>
+            {% autoescape off %}
+            {{ content }}
+            {% endautoescape %}
+
+        {% endif %}
+
+{% endblock %}
