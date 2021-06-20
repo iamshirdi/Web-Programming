@@ -1,0 +1,32 @@
+textarea {
+    min-height: 400px;
+}
+
+.div_view{
+    border: 2px solid black;
+ 
+}
+
+.div_view > div{
+    /* each block fixed space unlike div entire block space occupies */
+    display:inline-block;
+    margin:10px
+}
+
+.sender{
+    font-weight: bold;
+}
+
+
+.time{ 
+    font-weight:lighter;
+    float:right
+}
+
+#reply{
+    margin-left: 20px;
+}
+
+#add{
+    margin-top:20px;
+}
