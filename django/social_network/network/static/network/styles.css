@@ -1,0 +1,29 @@
+.body{
+    margin:10px;
+}
+
+#new-post{
+    border: 2px;
+    border-style: solid;
+    padding:10px;
+}
+
+input#id_new_post{
+    width: 350px;
+    height: 100px;
+}
+
+.posts{
+    border:2px;
+    border-style: solid;
+    margin:15px;
+    padding:10px;
+}
+
+#next{
+float:right
+}
+
+#prev{
+float:left
+}

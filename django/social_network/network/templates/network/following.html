@@ -1,0 +1,62 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% block script %}
+    <script src="{% static 'network/pagination.js' %}"></script>
+    <script src="{% static 'network/edit.js' %}"></script>
+
+{% endblock %}
+
+{% block body %}
+
+<h3>User following Posts</h3>
+
+<!--Lists all Posts-->
+{% for post in posts %}
+<div class = posts>
+  <div class="post_desc"> <b>Post:</b> {{post.post}}</div>
+  <div> <b>Name:</b> <a href ="{% url 'profile' post.name %}"> {{post.name}} </a></div>
+  <div> 
+    <form action="/edit_like" method="post">
+      {% csrf_token %}
+    </form>    
+  <b>Likes:</b> <span class ="count">{{post.liked_users.all.count}}
+      {%if user in post.liked_users.all %}
+      {% endif %}
+  </span>
+  {% if user.is_authenticated %}
+  {% if user.username != post.name %}
+  {%if user in post.liked_users.all %}
+  <button class="btn btn-primary mb-2 like" id={{post.id}} type="button">UnLike</button>
+  {% else %}
+  <button class="btn btn-primary mb-2 like" id={{post.id}} type="button">Like</button>
+
+  {% endif %}
+
+  {% endif %}
+  {% endif %}
+  
+  </div>
+  <div> <b>Date:</b> {{post.time}}</div>
+  <div class = "edit">
+    {% if user.username == post.name %}
+    <button class="btn btn-primary mb-2" id={{post.id}} type="button">Edit</button>
+    {% endif %}
+</div>
+</div>
+{% endfor %}
+
+{% if next %}
+<div id = "next">
+<button class="btn btn-primary mb-2" type="button">Next</button>
+</div>
+{% endif %}
+
+
+
+{% if previous %}
+<div id = "prev" >
+<button class="btn btn-primary mb-2" type="button">previous</button>
+</div>
+{% endif %}
+
+{% endblock %}
