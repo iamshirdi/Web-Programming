@@ -49,4 +49,4 @@
 - default route if logged in redirects to profile to add any rows
 - /profile/username to share and /profile/username/projects for projects
 - add, delete  and update skills explained
-
+https://youtu.be/qSHtFMIOMjw
