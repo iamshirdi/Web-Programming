@@ -1,0 +1,27 @@
+.jobs, .educations, .body{
+    margin:20px;
+    border: 2px;
+    border-style: solid;
+    padding:20px;
+}
+
+.skills{
+    margin:15px
+}
+#add_skills_form{
+    display:none
+}
+
+#add_projects_form{
+    display:none
+}
+
+#add_job_form{
+    display: none;
+}
+#add_edu_form{
+    display: none;
+}
+
+
+

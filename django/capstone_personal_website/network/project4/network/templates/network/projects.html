@@ -1,0 +1,70 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'network/add_projects.js' %}"></script>
+
+{% endblock %}
+
+{% block body %}
+    This is a personal projects of user 
+    <h1> Projects 
+    {% if user_logged_in %}
+    <button class="btn btn-primary mb-2 like" id ="add_projects" type="button">Add</button>
+    {% endif %}
+    </h1>
+    <!-- this is add form -->
+    <form id =add_projects_form action="{% url 'add_entity' %}" method="post"> 
+        {% csrf_token %}
+
+         <div class="form-group">
+        <label for="entity">Job Title</label>
+        <input type="text" class="form-control" name="entity" id="entity" placeholder="Title">
+      </div>
+
+      <div class="form-group">
+        <label for="start_date">start_date</label>
+        <input type="date" class="form-control" name="start_date" id="start_date" placeholder="start_date">
+        <label for="end_date">end_date</label>
+        <input type="date" class="form-control" name="end_date" id="end_date" placeholder="start_date">
+    </div>
+
+    <input type="hidden" id="entity_type" name="entity_type" value="projects">
+    <input type="hidden" id="usr" name="logged_in" value={{name}}>
+
+        <div class="form-group">
+            <label for="entity_desc">Job Description</label>
+            <textarea class="form-control" id="entity_desc" name="entity_desc" rows="3"></textarea>
+          </div>
+          <input class="btn btn-primary" type="submit" value="Submit">
+          <hr>
+    </form>
+
+    <!-- job class forms -->
+    <div class ="projects">
+
+        {% for project in projects %}
+        <div id = {{project.id}} >
+            <h2>{{project.entity}}</h2>
+            <b>{{project.start_date}} to {{project.end_date}} </b>
+            <p>
+                <i>{{project.entity_desc}}</i>
+            </p> 
+            {% if user_logged_in %}
+            <form class =delete_form action="{% url 'del_entity' %}" method="post"> 
+                {% csrf_token %}
+                <div class="form-group">
+                <input type="hidden" id="del_id" name="del_id" value={{project.id}}>
+                <input type="hidden" id="usr" name="logged_in" value={{name}}>
+                </div>
+                <input class="btn btn-danger" type="submit" value="Delete">
+                {% endif %}
+                </form>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+
+
+
+{% endblock %}
