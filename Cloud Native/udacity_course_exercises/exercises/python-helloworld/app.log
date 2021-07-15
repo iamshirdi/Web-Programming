@@ -1,0 +1,3 @@
+INFO:werkzeug:127.0.0.1 - - [07/Jul/2021 09:09:39] "GET /metrics HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [07/Jul/2021 09:09:44] "[33mGET /notfound HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [07/Jul/2021 09:09:52] "[33mGET /ffff HTTP/1.1[0m" 404 -

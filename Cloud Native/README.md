@@ -2,9 +2,10 @@
 - Cloud Native refers to set of practices that empowers an organization to build applications at scale
 - Monolithic scales all components(if memory required more it scales cpu etc ) unlike microservices which provies cost effective scalability,observalibity, better compatibility,functionalities (if used different programmming languages)
 - Docker easy manage,deploy,recover and provides same environment to users irrespective of platforms,dependencies etc
+- Kubernetes is a container orchestrator framework is capable to create, manage, configure thousands of containers on a set of distributed servers while preserving the connectivity and reachability of these containers. Deployment
 - Fluentd or Splunk for logging outputs in cmd shell by std out,error
 - Python loggger module  app.logger.info('Main request successfull') and logging.basicConfig(filename='app.log',level=logging.DEBUG) logs all endpoints which has app.logger.info and monitors non urls but if an endpoint doesnt have app.logger.info the endpoint will not be monitored
-- Some maaintance operations are split,merge,replace,stale (remove if no longer has business value) increases longviety of project
+- Some maintenance operations are split,merge,replace,stale (remove if no longer has business value) increases longviety of project
 
 # Docker
 - Hypervisor manages VM by providing virtualization on physical servers. VM replicating consumes lots of resources than required for an app .
