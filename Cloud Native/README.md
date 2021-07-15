@@ -13,6 +13,7 @@
 <br>
 <img src = "./static/Hypervisor-Docker.png" alt ="Vm vs Docker" title ="Architecture Vm vs Docker">
 - Docker file contains instructions to package application such as installing dependencies, compile code or impersonate specific user
+
 ```
 # set the base image(this is another docker image template which we are using). Since we're running 
 # a Python application a Python base image is    used FROM python:3.8
@@ -199,6 +200,7 @@ kubectl describe node {{ NODE NAME }}
 Application Deployment and secrets for confidential data:  Environment Variables
 -  A Namespace provides a logical separation between multiple applications and associated resources such as memory,cpu etc. Easy team managment and seperation
 - Create,Edit,Get,Describe, Delete, label, port-forward,logs are some of common operations on resource
+
 ```
 # create a Deployment resource
 # NAME - required; set the name of the deployment
