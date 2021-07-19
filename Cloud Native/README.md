@@ -1,3 +1,4 @@
+
 # About
 - Cloud Native refers to set of practices that empowers an organization to build applications at scale
 - Monolithic scales all components(if memory required more it scales cpu etc ) unlike microservices which provies cost effective scalability,observalibity, better compatibility,functionalities (if used different programmming languages)
@@ -286,4 +287,142 @@ kubectl apply -f manifest.yaml
 - Readiness probes - ensure that traffic is routed to that pods that are ready to handle requests
 - Services - to provide one entry point to all the available pods of an application
 
+#### Paas and Faas
+- Cloud foundry open source PAAS(code+manifeits,configuration etc) and can run on any cloud, on premise etc unlike heroku,google app engine
+- Function as a service is event driven so cost effective and useful for short time periods unlike PAAS which runs 24x7.Aws lambda,azure,cloud functions
+- Newspaper content delivery paas, account creatinon,publishing articles etc Faas less usage
 
+#### CI/CD
+- A delivery pipeline includes stages that can test, validate, package, and push new features to a production environment
+-The process of propagating an application through multiple environments, until it reached the end-users, is known as the Continuous Delivery (or CD) stage.
+- Package - create an executable that contains the latest code and its dependencies. This is a runnable instance of the application that can be deployed to end-users.
+- Staging - an environment identical to production, and where a release can be simulated without affecting the end-user experience.
+- Continuous Deployment - a procedure that contains the Continuous Integration and Continuous Delivery of a product.
+- Package usually refers to executable file or oci complaint image etc  which contains latest features and dependencies (docker build and push)
+- The build stage compiles the application source code and associated dependencies( python install -requirments and python app.py etc)
+- Jenkins,Circle ci, github actions(event driven:commmit,schedule,external event) etc are some of CI tools
+- Github actions usually stored in .github/workflow/python-version.yml
+-https://github.com/marketplace/actions/build-and-push-docker-images
+- secrets(environment variables) like docker hub username and password can be set in settings :secrets of repository
+- Jenkins, CircleCi, ArgoCd some of CD tools which can deploy like kubectl apply -f deployment.yaml
+- ArgoCD uses gitops as truth for deploying multiple kubernetes cluster, environments using manifets,config
+<br>
+<img src = "./static/continous-deployment-pipeline.png" alt ="CI/CD" title ="CI/CD">
+```
+##  Named of the workflow.
+name: Pytest
+
+## Set the trigger policy.
+## In this case, the workflow is execute on a `push` event,
+## or when a new commit is pushed to the repository
+on: [push]
+
+## List the steps to be executed by the workflow
+jobs:
+  ## Set the name of the job
+  build:
+    ## Configure the operating system the workflow should run on.
+    ## In this case, the job on Ubuntu. Additionally, set a the job
+    ## to execute on different Python versions 
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
+    ## Define a sequence of steps to be executed
+    steps:
+      ## Use the public `checkout` action  in version v2  
+      ## to checkout the existing code in the repository
+    - uses: actions/checkout@v2
+      ## Use the public `setup-python` actoin  in version v2  
+      ## to install python on the Ubuntu based environment.
+      ## Additionally, it ensures to loop through all 
+      ## the defined Python versions.
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    ## Install all necessary dependecies .
+    ## For example, pytest and any defined packages within the requirements.txt file.
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install  pytest 
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    ## Run all pytests by inovking the `pytest command`
+    - name: Test with pytest
+      run: |
+        pytest
+```
+- Argo Cd Provides Custom resource definitions to configure and manage the application resource
+- ArgoCD provides an “app-of-apps” technique that enables a group of applications to be deployed and configured together(microservice)
+- helm as template manager for multiple cluster templates
+- Helm - package manager that templates exiting manifests, and uses input files to tailor configuration for each environment.(charts-yaml templates describe state)
+- Kustomize - a template-free mechanism that uses a base and multiple overlays, to manage the configuration for each environment
+- Jsonnet - a programming language, that enables the templating of manifests as JSON files, that can be easily consumed by Kubernetes
+```
+## Argo cd server node port for local access computer through ports static vm access
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/name: argocd-server
+    app.kubernetes.io/part-of: argocd
+  name: argocd-server-nodeport
+  namespace: argocd
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 30007
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 30008
+  selector:
+    app.kubernetes.io/name: argocd-server
+  sessionAffinity: None
+  type: NodePort
+```
+
+#### Helm
+- Chart.yaml - expose chart details, such as description, version, and dependencies
+- templates/ folder - contains templates YAML manifests for Kubernetes resources
+- values.yaml - default input configuration file for the chart. If no override input file is provided, the Helm chart will fallback to using the default values.yaml file (included with the chart).
+- Argo CD supports config toools helm
+
+```
+apiVersion: v1
+kind: Namespace
+metadata:
+# if no value provided it takes from default values.yaml
+  name: {{ .Values.namespace.name }} 
+
+#values.yaml
+# provide the name of the namespace
+namespace:
+  name: test (test-prod.yaml)
+## Argo CD
+  [...]
+  source:
+    ## change the source of manifests to a Helm chart
+    helm:
+      ## define the input values file
+      valueFiles:
+      - values.yaml (values-prod.yaml)
+    ## set the path to the folder where the Helm chart is stored
+    path: solutions/helm/python-helloworld
+    ## set the base repository that contains the Helm chart
+    repoURL: https://github.com/udacity/nd064_course_1 
+    targetRevision: HEAD
+```
+#### Push and pull model
+- Push based higher risk for multiple commits at once(no active propogation)
+- Jenkins, CircleCI
+- Pull based identifies new changes and applies them to a Kubernetes cluster as soon as available
+- Argo Cd,Flux
+- pull pipeline, a Kubernetes Operator deploys new images from inside of the cluster unlike push which exposes credentials
