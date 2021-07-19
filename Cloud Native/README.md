@@ -1,3 +1,6 @@
+<img src = "./SUSE+Scholarship+badge.png" alt ="CI/CD" title ="CI/CD">
+
+<br>
 
 # About
 - Cloud Native refers to set of practices that empowers an organization to build applications at scale
