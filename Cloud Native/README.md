@@ -295,7 +295,7 @@ kubectl apply -f manifest.yaml
 - Function as a service is event driven so cost effective and useful for short time periods unlike PAAS which runs 24x7.Aws lambda,azure,cloud functions
 - Newspaper content delivery paas, account creatinon,publishing articles etc Faas less usage
 
-#### CI/CD
+# CI/CD
 - A delivery pipeline includes stages that can test, validate, package, and push new features to a production environment
 -The process of propagating an application through multiple environments, until it reached the end-users, is known as the Continuous Delivery (or CD) stage.
 - Package - create an executable that contains the latest code and its dependencies. This is a runnable instance of the application that can be deployed to end-users.
@@ -308,9 +308,9 @@ kubectl apply -f manifest.yaml
 -https://github.com/marketplace/actions/build-and-push-docker-images
 - secrets(environment variables) like docker hub username and password can be set in settings :secrets of repository
 - Jenkins, CircleCi, ArgoCd some of CD tools which can deploy like kubectl apply -f deployment.yaml
-- ArgoCD uses gitops as truth for deploying multiple kubernetes cluster, environments using manifets,config
 <br>
 <img src = "./static/continous-deployment-pipeline.png" alt ="CI/CD" title ="CI/CD">
+
 ```
 ##  Named of the workflow.
 name: Pytest
@@ -356,6 +356,9 @@ jobs:
       run: |
         pytest
 ```
+
+#### Argo CD
+- ArgoCD uses gitops as truth for deploying multiple kubernetes cluster, environments using manifets,config
 - Argo Cd Provides Custom resource definitions to configure and manage the application resource
 - ArgoCD provides an “app-of-apps” technique that enables a group of applications to be deployed and configured together(microservice)
 - helm as template manager for multiple cluster templates
